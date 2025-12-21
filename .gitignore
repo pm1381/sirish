@@ -1,4 +1,4 @@
-
+*.sirish.go
 dist/
 vendor/
 .idea/
