@@ -38,7 +38,7 @@ func New{{$wrapperName}}(
 ) *{{$wrapperName}} {
 
     return &{{$wrapperName}}{
-        name:           name, // TODO: at the moment of writing this, there is no need to have name. remove it
+        name:           name,
         tagType:        tagType,
         interfaceName:  "{{ .Interface.Name }}",
         wrapped:        wrapped,
@@ -54,14 +54,16 @@ func (w *{{ $wrapperName }}) {{$m.Name}}({{$m.ParamsOverallNames}}) {{- if $m.Re
     {{- if $m.HasCtx }}
     var {{$m.SpanName}} *apm.Span
     {{$m.SpanName}}, {{$m.CtxName}} = apm.StartSpan({{$m.CtxName}}, "{{$m.SpecialName}}", w.tagType)
+    {{$m.SpanName}}.Context.SetLabel("label", w.name)
     defer {{$m.SpanName}}.End()
-    {{- else }}
 
+    {{- else }}
         {{- if $needTx }}
     var {{$m.SpanName}} *apm.Span
     tx := apm.DefaultTracer().StartTransaction("{{$m.SpecialName}}", w.tagType)
     defer tx.End()
     {{$m.SpanName}}, _ = apm.StartSpan(apm.ContextWithTransaction(context.Background(), tx), "{{printf "%sSpan" $m.Name}}", w.tagType)
+    {{$m.SpanName}}.Context.SetLabel("label", w.name)
     defer {{$m.SpanName}}.End()
         {{- end }}
 
@@ -79,6 +81,18 @@ func (w *{{ $wrapperName }}) {{$m.Name}}({{$m.ParamsOverallNames}}) {{- if $m.Re
     return
     {{- end}}
     {{- if $m.Results}}
+        {{- if or $m.HasCtx $needTx}}
+            {{- if ne $m.ErrorName "" }}
+    if {{$m.ErrorName}} != nil {
+                {{- if $m.HasCtx}}
+    apm.CaptureError({{$m.CtxName}}, {{$m.ErrorName}}).SetSpan({{$m.SpanName}})
+                {{- end}}
+    {{$m.SpanName}}.Outcome = "failure"
+    } else {
+        {{$m.SpanName}}.Outcome = "success"
+    }
+            {{- end}}
+        {{- end}}
     return {{$m.ResultNames}}
     {{- end}}
 }

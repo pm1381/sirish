@@ -14,7 +14,7 @@ import (
 )
 
 const (
-	version  = "0.0.1"
+	version  = "0.1.1"
 	builtBy  = "golang"
 	date     = "2025-12-20"
 	progDesc = "sirish, a solution to create wrappers for your tracing needs"
