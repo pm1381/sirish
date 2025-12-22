@@ -30,20 +30,25 @@ Sirish takes your interface and generates a struct that "wraps" your real implem
 ### Before (Your Code)
 ```go
 type TestModule interface {
-    DoTest1(ctx context.Context, req DoTest1Request, span int) (string, error)
+    DoTest2(ctx context.Context, req *DoTest2Request) (*DoTest2Response, error)
 }
 ```
 ### After (Generated Wrapper)
 ```go
 // Automatically generated
-func (w *TestModuleSirishWrapperImpl) DoTest1(ctx_0_0 context.Context, req DoTest1Request, span int) (string, error) {
-    var DoTest1SpncSoZ_2_0 *apm.Span
-
-    DoTest1SpncSoZ_2_0, ctx_0_0 = apm.StartSpan(ctx_0_0, "TestModule.DoTest1", w.tagType)
-    defer DoTest1SpncSoZ_2_0.End()
-
-    DoTest1ResUnwkcU_0_0, DoTest1ResUnmXMw_1_0 := w.wrapped.DoTest1(ctx_0_0, req, span)
-    return DoTest1ResUnwkcU_0_0, DoTest1ResUnmXMw_1_0
+func (w *TestModuleSirishWrapperImpl) DoTest2(ctx_0_0 context.Context, req *DoTest2Request) (*DoTest2Response, error) {
+    var span *apm.Span
+    span, ctx_0_0 = apm.StartSpan(ctx_0_0, "TestModule.DoTest2", w.tagType)
+    span.Context.SetLabel("label", w.name)
+    defer span.End()
+    DoTest2ResUnMIZr_0_0, DoTest2ResUnMBhh_1_0 := w.wrapped.DoTest2(ctx_0_0, req)
+    if DoTest2ResUnMBhh_1_0 != nil {
+        apm.CaptureError(ctx_0_0, DoTest2ResUnMBhh_1_0).SetSpan(span)
+        span.Outcome = "failure"
+    } else {
+        span.Outcome = "success"
+    }
+    return DoTest2ResUnMIZr_0_0, DoTest2ResUnMBhh_1_0
 }
 ```
 ---

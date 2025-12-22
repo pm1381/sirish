@@ -14,6 +14,7 @@ type Method struct {
 	ParamsNames        string
 	ParamsOverallNames string
 	HasError           bool
+	ErrorName          string
 	CtxName            string
 	SpanName           string
 }

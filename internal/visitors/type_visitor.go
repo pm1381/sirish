@@ -257,20 +257,27 @@ func (tv *TypeVisitor) handleResults(results *ast.FieldList, method *dto.Method)
 			method.HasError = true
 		}
 		if len(p.Names) == 0 {
+			n := MethodParamSnowflake(method.Name, index, 0, 4, "ResUn")
+			if method.HasError && method.ErrorName == "" && typeStr == "error" {
+				method.ErrorName = n
+			}
 			resultsInfo = append(resultsInfo, dto.ResultInfo{
-				Name: MethodParamSnowflake(method.Name, index, 0, 4, "ResUn"),
+				Name: n,
 				Type: typeStr,
 			})
 		} else {
 			// not really casual :)
 			method.HasNamedResult = true
 			for i, name := range p.Names {
-				if name.Name == method.SpanName {
-					method.SpanName = MethodParamSnowflake(method.Name, index, i, 4, "Spn")
-				}
 				n := name.Name
 				if name.Name == "_" {
 					n = MethodParamSnowflake(method.Name, index, i, 4, "ResUn")
+				}
+				if method.HasError && method.ErrorName == "" && typeStr == "error" {
+					method.ErrorName = n
+				}
+				if n == method.SpanName {
+					method.SpanName = MethodParamSnowflake(method.Name, index, i, 4, "Spn")
 				}
 				resultsInfo = append(resultsInfo, dto.ResultInfo{
 					Name: n,
