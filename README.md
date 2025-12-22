@@ -18,7 +18,6 @@ It allows you to add deep observability to your services without touching your c
 * 🧠 **Context-Aware**:
     * Uses existing `context.Context` for distributed tracing.
     * Safely creates a transaction if no context exists (ideal for background jobs).
-* 🧬 **Generics Support**: Full support for Go 1.18+ generic interfaces (e.g., `Repo[T any]`).
 * 📦 **Smart Imports**: Uses `golang.org/x/tools/imports` to handle and format imports automatically.
 * 🔁 **`go:generate` Ready**: Designed to fit perfectly into your existing Go build workflow.
 
@@ -90,10 +89,6 @@ From your project root, run the standard Go generate command
 ```bash
   go generate ./...
 ```
-Sirish will create an APM-instrumented wrapper file in
-the same directory (e.g., module.sirish.go). If multiple
-interfaces are defined in the same file, Sirish handles
-the naming and imports deterministically.
 ---
 ## 📖 Examples
 
@@ -111,3 +106,8 @@ Sirish is the right choice for your project if you:
 * **Rely on Clean Architecture**: Your project uses interfaces to decouple layers, and you want a clean way to "plug in" observability as a decorator.
 * **Need consistency**: You want to ensure that every method call in a specific service layer is traced identically across your entire team or organization.
 * **Prefer code generation over "magic"**: You prefer explicit, type-safe Go code that you can read and debug over runtime reflection or complex proxy patterns.
+
+---
+##  Future Considerations
+* generics and structs are not fully supported in latest version
+
