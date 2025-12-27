@@ -14,7 +14,6 @@ import (
 )
 
 const (
-	version  = "0.1.1"
 	builtBy  = "golang"
 	date     = "2025-12-20"
 	progDesc = "sirish, a solution to create wrappers for your tracing needs"
@@ -35,7 +34,7 @@ func main() {
 	}
 
 	if *cfg.ShowBanner {
-		banner := view.NewBanner(templatesMemoryEmbed, "internal/templates/banner.gotmpl", asciiArt, progDesc, version, date, builtBy)
+		banner := view.NewBanner(templatesMemoryEmbed, "internal/templates/banner.gotmpl", asciiArt, progDesc, "", date, builtBy)
 		fmt.Print(banner.Show())
 	}
 	if *cfg.FilePath == "" {
