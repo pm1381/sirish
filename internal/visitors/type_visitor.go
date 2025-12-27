@@ -207,7 +207,7 @@ func (tv *TypeVisitor) handleParams(params *ast.FieldList, method *dto.Method) e
 		}
 		if len(p.Names) == 0 {
 			paramsInfo = append(paramsInfo, dto.ParamInfo{
-				Name: MethodParamSnowflake(method.Name, index, 0, 4, fmt.Sprintf("Un%s", typeStr)),
+				Name: MethodParamSnowflake(method.Name, index, 0, 4, "Un"),
 				Type: typeStr,
 			})
 		} else {
