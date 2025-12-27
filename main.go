@@ -65,7 +65,7 @@ func main() {
 
 	err = generator.Generate(wrapper.APMTypeWrapperOptions{
 		GeneralOptions: wrapper.GeneralOptions{
-			Version:  version,
+			Version:  "",
 			Imports:  *cfg.FormatImports,
 			CreateTx: *cfg.TraceGenerator,
 		},
