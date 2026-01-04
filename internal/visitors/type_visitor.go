@@ -311,7 +311,7 @@ func (tv *TypeVisitor) handleImports(node *ast.ImportSpec) error {
 	if node.Name != nil {
 		alias = node.Name.Name
 	} else {
-		alias = path.Base(unquoteImport)
+		//alias = path.Base(unquoteImport)
 	}
 	tv.importAlias[unquoteImport] = alias
 	return nil

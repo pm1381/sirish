@@ -4,7 +4,7 @@
 package internal
 
 import (
-	context "context"
+	"context"
 
 	apm "go.elastic.co/apm/v2"
 )
@@ -38,18 +38,18 @@ func (w *TestModuleSirishWrapperImpl) DoTest1(ctx_0_0 context.Context, req DoTes
 		ctx_0_0 = apm.ContextWithTransaction(ctx_0_0, ctx_0_0ApmTx)
 		defer ctx_0_0ApmTx.End()
 	}
-	var DoTest1SpntQjO_2_0 *apm.Span
-	DoTest1SpntQjO_2_0, ctx_0_0 = apm.StartSpan(ctx_0_0, "TestModule.DoTest1", w.tagType)
-	DoTest1SpntQjO_2_0.Context.SetLabel("label", w.name)
-	defer DoTest1SpntQjO_2_0.End()
-	DoTest1ResUnXLIM_0_0, DoTest1ResUnmTdF_1_0 := w.wrapped.DoTest1(ctx_0_0, req, span)
-	if DoTest1ResUnmTdF_1_0 != nil {
-		apm.CaptureError(ctx_0_0, DoTest1ResUnmTdF_1_0).SetSpan(DoTest1SpntQjO_2_0)
-		DoTest1SpntQjO_2_0.Outcome = "failure"
+	var DoTest1SpnSkOW_2_0 *apm.Span
+	DoTest1SpnSkOW_2_0, ctx_0_0 = apm.StartSpan(ctx_0_0, "TestModule.DoTest1", w.tagType)
+	DoTest1SpnSkOW_2_0.Context.SetLabel("label", w.name)
+	defer DoTest1SpnSkOW_2_0.End()
+	DoTest1ResUnKuiU_0_0, DoTest1ResUnglCc_1_0 := w.wrapped.DoTest1(ctx_0_0, req, span)
+	if DoTest1ResUnglCc_1_0 != nil {
+		apm.CaptureError(ctx_0_0, DoTest1ResUnglCc_1_0).SetSpan(DoTest1SpnSkOW_2_0)
+		DoTest1SpnSkOW_2_0.Outcome = "failure"
 	} else {
-		DoTest1SpntQjO_2_0.Outcome = "success"
+		DoTest1SpnSkOW_2_0.Outcome = "success"
 	}
-	return DoTest1ResUnXLIM_0_0, DoTest1ResUnmTdF_1_0
+	return DoTest1ResUnKuiU_0_0, DoTest1ResUnglCc_1_0
 }
 
 func (w *TestModuleSirishWrapperImpl) DoTest2(ctx_0_0 context.Context, req *DoTest2Request) (*DoTest2Response, error) {
@@ -63,14 +63,14 @@ func (w *TestModuleSirishWrapperImpl) DoTest2(ctx_0_0 context.Context, req *DoTe
 	span, ctx_0_0 = apm.StartSpan(ctx_0_0, "TestModule.DoTest2", w.tagType)
 	span.Context.SetLabel("label", w.name)
 	defer span.End()
-	DoTest2ResUnULXu_0_0, DoTest2ResUnesrU_1_0 := w.wrapped.DoTest2(ctx_0_0, req)
-	if DoTest2ResUnesrU_1_0 != nil {
-		apm.CaptureError(ctx_0_0, DoTest2ResUnesrU_1_0).SetSpan(span)
+	DoTest2ResUnBuMU_0_0, DoTest2ResUnviEr_1_0 := w.wrapped.DoTest2(ctx_0_0, req)
+	if DoTest2ResUnviEr_1_0 != nil {
+		apm.CaptureError(ctx_0_0, DoTest2ResUnviEr_1_0).SetSpan(span)
 		span.Outcome = "failure"
 	} else {
 		span.Outcome = "success"
 	}
-	return DoTest2ResUnULXu_0_0, DoTest2ResUnesrU_1_0
+	return DoTest2ResUnBuMU_0_0, DoTest2ResUnviEr_1_0
 }
 
 func (w *TestModuleSirishWrapperImpl) DoNext() (ctx context.Context, res interface{}, err error) {
