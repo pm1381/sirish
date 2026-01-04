@@ -47,19 +47,25 @@ type TestModule interface {
 ### After (Generated Wrapper)
 ```go
 // Automatically generated
-func (w *TestModuleSirishWrapperImpl) DoTest2(ctx_0_0 context.Context, req *DoTest2Request) (*DoTest2Response, error) {
-    var span *apm.Span
-    span, ctx_0_0 = apm.StartSpan(ctx_0_0, "TestModule.DoTest2", w.tagType)
-    span.Context.SetLabel("label", w.name)
-    defer span.End()
-    DoTest2ResUnMIZr_0_0, DoTest2ResUnMBhh_1_0 := w.wrapped.DoTest2(ctx_0_0, req)
-    if DoTest2ResUnMBhh_1_0 != nil {
-        apm.CaptureError(ctx_0_0, DoTest2ResUnMBhh_1_0).SetSpan(span)
-        span.Outcome = "failure"
-    } else {
-        span.Outcome = "success"
-    }
-    return DoTest2ResUnMIZr_0_0, DoTest2ResUnMBhh_1_0
+func (w *TestModuleSirishWrapperImpl) DoTest1(ctx_0_0 context.Context, req DoTest1Request, span int) (string, error) {
+  if apm.TransactionFromContext(ctx_0_0) == nil {
+    // for handling scenarios where the incoming context does not have any apm transaction
+    ctx_0_0ApmTx := apm.DefaultTracer().StartTransaction("Transaction.TestModule.DoTest1", w.tagType)
+    ctx_0_0 = apm.ContextWithTransaction(ctx_0_0, ctx_0_0ApmTx)
+    defer ctx_0_0ApmTx.End()
+  }
+  var DoTest1SpntQjO_2_0 *apm.Span
+  DoTest1SpntQjO_2_0, ctx_0_0 = apm.StartSpan(ctx_0_0, "TestModule.DoTest1", w.tagType)
+  DoTest1SpntQjO_2_0.Context.SetLabel("label", w.name)
+  defer DoTest1SpntQjO_2_0.End()
+  DoTest1ResUnXLIM_0_0, DoTest1ResUnmTdF_1_0 := w.wrapped.DoTest1(ctx_0_0, req, span)
+  if DoTest1ResUnmTdF_1_0 != nil {
+    apm.CaptureError(ctx_0_0, DoTest1ResUnmTdF_1_0).SetSpan(DoTest1SpntQjO_2_0)
+    DoTest1SpntQjO_2_0.Outcome = "failure"
+  } else {
+    DoTest1SpntQjO_2_0.Outcome = "success"
+  }
+  return DoTest1ResUnXLIM_0_0, DoTest1ResUnmTdF_1_0
 }
 ```
 ---
