@@ -18,9 +18,20 @@ It allows you to add deep observability to your services without touching your c
 * 🧠 **Context-Aware**:
     * Uses existing `context.Context` for distributed tracing.
     * Safely creates a transaction if no context exists (ideal for background jobs).
+    * if context does not contain apmTransaction, sirish automatically recognize and make it
 * 📦 **Smart Imports**: Uses `golang.org/x/tools/imports` to handle and format imports automatically.
 * 🔁 **`go:generate` Ready**: Designed to fit perfectly into your existing Go build workflow.
 
+---
+
+## 🤔 When should I use Sirish?
+
+Sirish is the right choice for your project if you:
+
+* **Want APM visibility without pollution**: You want to track performance and errors in Elastic APM but don't want to clutter your core business logic with `apm.StartSpan` or `apm.CaptureError` calls.
+* **Rely on Clean Architecture**: Your project uses interfaces to decouple layers, and you want a clean way to "plug in" observability as a decorator.
+* **Need consistency**: You want to ensure that every method call in a specific service layer is traced identically across your entire team or organization.
+* **Prefer code generation over "magic"**: You prefer explicit, type-safe Go code that you can read and debug over runtime reflection or complex proxy patterns.
 ---
 
 ## 🔍 How it Works
@@ -52,6 +63,7 @@ func (w *TestModuleSirishWrapperImpl) DoTest2(ctx_0_0 context.Context, req *DoTe
 }
 ```
 ---
+
 ## Installation
 
 ### Install the binary (recommended)
@@ -65,6 +77,7 @@ Run the following command to install the `sirish` binary into your `$GOBIN` (or 
   sirish --help
 ```
 ---
+
 ## Usage
 
 Sirish is designed to be seamless and is typically invoked via the standard `go:generate` tool.
@@ -95,6 +108,7 @@ From your project root, run the standard Go generate command
   go generate ./...
 ```
 ---
+
 ## 📖 Examples
 
 Check the ```examples/``` directory for a full implementation featuring:
@@ -103,16 +117,6 @@ Check the ```examples/``` directory for a full implementation featuring:
 * Elastic APM middleware setup.
 * Context propagation across layers.
 ---
-## 🤔 When should I use Sirish?
 
-Sirish is the right choice for your project if you:
-
-* **Want APM visibility without pollution**: You want to track performance and errors in Elastic APM but don't want to clutter your core business logic with `apm.StartSpan` or `apm.CaptureError` calls.
-* **Rely on Clean Architecture**: Your project uses interfaces to decouple layers, and you want a clean way to "plug in" observability as a decorator.
-* **Need consistency**: You want to ensure that every method call in a specific service layer is traced identically across your entire team or organization.
-* **Prefer code generation over "magic"**: You prefer explicit, type-safe Go code that you can read and debug over runtime reflection or complex proxy patterns.
-
----
 ##  Future Considerations
 * generics and structs are not fully supported in latest version
-
