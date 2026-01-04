@@ -269,7 +269,7 @@ func TestImportsWorks(t *testing.T) {
 			result: result{
 				expectedImports: map[string]string{
 					"math/rand": "rand2",
-					"github.com/pm1381/sirish/internal/visitors/test_samples/rand": "rand",
+					"github.com/pm1381/sirish/internal/visitors/test_samples/rand": "",
 				},
 			},
 		},
