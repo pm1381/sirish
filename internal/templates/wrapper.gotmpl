@@ -52,6 +52,12 @@ func (w *{{ $wrapperName }}) {{$m.Name}}({{$m.ParamsOverallNames}}) {{- if $m.Re
     {{- if $m.HasNamedResult }}{{$m.ResultOverallNames}}{{- else}}{{$m.ResultTypesNames}}{{- end}}){{ end }} {
 
     {{- if $m.HasCtx }}
+    if apm.TransactionFromContext({{$m.CtxName}}) == nil {
+        // for handling scenarios where the incoming context does not have any apm transaction
+        {{$m.CtxName}}ApmTx := apm.DefaultTracer().StartTransaction("Transaction.{{$m.SpecialName}}", w.tagType)
+        {{$m.CtxName}} = apm.ContextWithTransaction({{$m.CtxName}}, {{$m.CtxName}}ApmTx)
+        defer {{$m.CtxName}}ApmTx.End()
+    }
     var {{$m.SpanName}} *apm.Span
     {{$m.SpanName}}, {{$m.CtxName}} = apm.StartSpan({{$m.CtxName}}, "{{$m.SpecialName}}", w.tagType)
     {{$m.SpanName}}.Context.SetLabel("label", w.name)
